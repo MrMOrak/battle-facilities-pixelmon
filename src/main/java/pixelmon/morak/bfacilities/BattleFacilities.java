@@ -3,6 +3,7 @@ package pixelmon.morak.bfacilities;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
@@ -15,11 +16,13 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import pixelmon.morak.bfacilities.commands.CancelBattlefacilities;
+import pixelmon.morak.bfacilities.commands.InitiateBattleFacility;
 
 import java.util.stream.Collectors;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod("bFacilities")
+@Mod("bfacilities")
 public class BattleFacilities {
 
     // Directly reference a log4j logger.
@@ -67,6 +70,12 @@ public class BattleFacilities {
     public void onServerStarting(FMLServerStartingEvent event) {
         // do something when the server starts
         LOGGER.info("HELLO from server starting");
+    }
+
+    @SubscribeEvent
+    public void registerCommands(RegisterCommandsEvent event){
+        InitiateBattleFacility.register(event.getDispatcher());
+        CancelBattlefacilities.register(event.getDispatcher());
     }
 
     // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD

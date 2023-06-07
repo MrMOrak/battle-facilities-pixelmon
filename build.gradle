@@ -103,12 +103,12 @@ repositories {
     //     dir 'libs'
     // }
     ivy {
-        setUrl('https://download.nodecdn.net/containers/reforged/server/release')
+        setUrl('https://download.nodecdn.net/containers/reforged/universal/release')
         metadataSources {
             artifact()
         }
         patternLayout {
-            artifact('[revision]/[artifact].[ext]')
+            artifact('[artifact].[ext]')
         }
     }
 }
@@ -118,7 +118,7 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.34'
-    implementation fg.deobf('pixelmon:Pixelmon-1.16.5-9.1.5-server:9.1.5')
+    implementation fg.deobf('pixelmon:Pixelmon-1.16.5-9.1.5-universal:9.1.5')
 
     // Real mod deobf dependency examples - these get remapped to your current mappings
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
