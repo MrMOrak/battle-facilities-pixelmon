@@ -11,8 +11,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import pixelmon.morak.bfacilities.TempParty;
-import pixelmon.morak.bfacilities.Utils;
+import org.jetbrains.annotations.NotNull;
+import pixelmon.morak.bfacilities.gui.customslots.PlaceHolderSlot;
+import pixelmon.morak.bfacilities.gui.customslots.RerollSlot;
+import pixelmon.morak.bfacilities.gui.customslots.SelectSlot;
+import pixelmon.morak.bfacilities.gui.customslots.TeamSlot;
+import pixelmon.morak.bfacilities.tempParty.TempParty;
+import pixelmon.morak.bfacilities.utils.Utils;
+
 import java.util.Random;
 
 
@@ -20,108 +26,147 @@ public class TeamSelectionContainer extends Container implements INamedContainer
 
     private static final int ROWS = 6;
     private static final int COLUMNS = 9;
+    private static int rerolls = 2;
+    private static boolean pickUped = false;
 
     Random random = new Random();
 
-
     Utils utils = new Utils();
 
+    PlayerEntity player;
 
-    private final Inventory inventory = new Inventory(ROWS*COLUMNS);
 
-    public TeamSelectionContainer(int windowId, PlayerEntity player){
+    private static final Inventory inventory = new Inventory(ROWS * COLUMNS);
+
+    public TeamSelectionContainer(int windowId, PlayerEntity player) {
         super(ContainerType.GENERIC_9X6, windowId);
+        this.player = player;
 
         int slotIndex = 0;
+
+
+        ItemStack paneYellow = new ItemStack(Items.YELLOW_STAINED_GLASS_PANE);
+        ItemStack paneCyan = new ItemStack(Items.CYAN_STAINED_GLASS_PANE);
+
+
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 9; j++) {
+                if (i == 5 || i == 0) {
                     this.addSlot(new PlaceHolderSlot(inventory, slotIndex, 8 + j * 18, 18 + i * 18));
-                    slotIndex++;
+                    if (slotIndex % 2 == 0) {
+                        inventory.setInventorySlotContents(slotIndex, paneYellow);
+                    } else {
+                        inventory.setInventorySlotContents(slotIndex, paneCyan);
+                    }
+                } else {
+                    if (j < 6) {
+                        this.addSlot(new TeamSlot(inventory, slotIndex, 8 + j * 18, 18 + i * 18));
+                        int rand = random.nextInt(700);
+                        ItemStack photo = SpriteItemHelper.getPhoto(PokemonFactory.create(PixelmonSpecies.fromDex(rand).get()));
+                        inventory.setInventorySlotContents(slotIndex, photo.setDisplayName(PixelmonSpecies.fromDex(rand).get().getTranslatedName()));
+                    }
+                    if (j == 6) {
+                        this.addSlot(new PlaceHolderSlot(inventory, slotIndex, 8 + j * 18, 18 + i * 18));
+                        inventory.setInventorySlotContents(slotIndex, new ItemStack((Items.GRAY_STAINED_GLASS_PANE)));
+                    }
+                    if (j == 7) {
+                        this.addSlot(new SelectSlot(inventory, slotIndex, 8 + j * 18, 18 + i * 18));
+                        inventory.setInventorySlotContents(slotIndex, new ItemStack((Items.GREEN_STAINED_GLASS_PANE)).setDisplayName(new StringTextComponent("Select this team")));
+                    }
+                    if (j == 8) {
+                        this.addSlot(new RerollSlot(inventory, slotIndex, 8 + j * 18, 18 + i * 18));
+                        inventory.setInventorySlotContents(slotIndex, new ItemStack((Items.RED_STAINED_GLASS_PANE)).setDisplayName(new StringTextComponent("Reroll")));
+                    }
+                }
+                slotIndex++;
             }
         }
 
-        ItemStack stack = SpriteItemHelper.getPhoto(PokemonFactory.create(PixelmonSpecies.CHARIZARD.getValueUnsafe()));
+        for (int row = 0; row < 3; ++row) {
+            for (int column = 0; column < 9; ++column) {
+                int x = 9 + column * 18;
+                int y = 84 + row * 18;
+                this.addSlot(new Slot(player.inventory, column + row * 9 + 9, x, y));
+            }
+        }
+
+        // Add player hotbar slots
+        for (int column = 0; column < 9; ++column) {
+            int x = 9 + column * 18;
+            int y = 142;
+            this.addSlot(new Slot(player.inventory, column, x, y));
+        }
+        /*ItemStack stack = SpriteItemHelper.getPhoto(PokemonFactory.create(PixelmonSpecies.CHARIZARD.getValueUnsafe()));
 
         ItemStack[] testStacks = new ItemStack[]{stack, stack, stack, stack, stack, stack};
 
-        new TempParty(utils.parseItemstoTeam(testStacks), player);
-
-        prefillContainerWithSeparation();
-        fillContainerWithRandomTeams();
+        new TempParty(utils.parseItemstoTeam(testStacks), player);*/
     }
 
 
-
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
+    public boolean canInteractWith(@NotNull PlayerEntity playerIn) {
         return true;
     }
 
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+    public Container createMenu(int windowId, @NotNull PlayerInventory playerInventory, @NotNull PlayerEntity player) {
         return new TeamSelectionContainer(windowId, player);
     }
 
     @Override
-    public ITextComponent getDisplayName() {
+    public @NotNull ITextComponent getDisplayName() {
         return new StringTextComponent("Select your Team");
     }
 
-    private void prefillContainerWithSeparation(){
-        ItemStack paneYellow = new ItemStack(Items.YELLOW_STAINED_GLASS_PANE);
-        ItemStack paneCyan = new ItemStack(Items.CYAN_STAINED_GLASS_PANE);
-        for(int i = 1; i<9;){
-            inventory.setInventorySlotContents(i, paneYellow);
-            i = i+2;
-        }
-        for(int i = 10; i<18;) {
-            inventory.setInventorySlotContents(i, paneCyan);
-            i = i+2;
-        }
-        for(int i = 19; i<27;){
-            inventory.setInventorySlotContents(i, paneYellow);
-            i = i+2;
-        }
-        for(int i = 28; i<36;){
-            inventory.setInventorySlotContents(i, paneCyan);
-            i = i+2;
-        }
-        for(int i = 37; i<45;){
-            inventory.setInventorySlotContents(i, paneYellow);
-            i = i+2;
-        }
-        for(int i = 46; i<54;){
-            inventory.setInventorySlotContents(i, paneCyan);
-            i = i+2;
-        }
-    }
+    @Override
+    public @NotNull ItemStack slotClick(int slotId, int dragType, @NotNull ClickType clickType, @NotNull PlayerEntity player) {
 
-    public void fillContainerWithRandomTeams(){
-        for(int i = 0; i<10;){
-            inventory.setInventorySlotContents(i, SpriteItemHelper.getPhoto(PokemonFactory.create(PixelmonSpecies.fromDex(random.nextInt(152)).get())));
-            i = i+2;
-        }
-        for(int i = 9; i<19;) {
-            inventory.setInventorySlotContents(i, SpriteItemHelper.getPhoto(PokemonFactory.create(PixelmonSpecies.fromDex(random.nextInt(152)).get())));
-            i = i+2;
-        }
-        for(int i = 18; i<28;){
-            inventory.setInventorySlotContents(i, SpriteItemHelper.getPhoto(PokemonFactory.create(PixelmonSpecies.fromDex(random.nextInt(152)).get())));
-            i = i+2;
-        }
-        for(int i = 27; i<37;){
-            inventory.setInventorySlotContents(i, SpriteItemHelper.getPhoto(PokemonFactory.create(PixelmonSpecies.fromDex(random.nextInt(152)).get())));
-            i = i+2;
-        }
-        for(int i = 36; i<46;){
-            inventory.setInventorySlotContents(i, SpriteItemHelper.getPhoto(PokemonFactory.create(PixelmonSpecies.fromDex(random.nextInt(152)).get())));
-            i = i+2;
-        }
-        for(int i = 45; i<55;){
-            inventory.setInventorySlotContents(i, SpriteItemHelper.getPhoto(PokemonFactory.create(PixelmonSpecies.fromDex(random.nextInt(152)).get())));
-            i = i+2;
-        }
-    }
+        Slot slot = inventorySlots.get(slotId);
 
+        ItemStack clickedItem = inventory.getStackInSlot(slotId);
+        inventory.setInventorySlotContents(slotId, clickedItem);
+
+        if (pickUped) {
+            pickUped = false;
+            return clickedItem;
+        }
+
+        pickUped = true;
+
+        if (clickType == ClickType.PICKUP) {
+            if (slot instanceof RerollSlot) {
+                if (rerolls == 0) {
+                    player.sendMessage(new StringTextComponent("Out of rerolls"), player.getUniqueID());
+                    return clickedItem;
+                }
+                for (int i = 0; i < 6; ++i) {
+                    int row = slotId / 9;
+                    int rand = random.nextInt(700);
+                    ItemStack photo = SpriteItemHelper.getPhoto(PokemonFactory.create(PixelmonSpecies.fromDex(rand).get()));
+                    inventory.setInventorySlotContents(row * 9 + i, photo.setDisplayName(PixelmonSpecies.fromDex(rand).get().getTranslatedName()));
+
+                }
+                rerolls -= 1;
+            }
+        }
+
+        if (clickType != ClickType.SWAP) {
+            if (slot instanceof SelectSlot) {
+                ItemStack[] team = new ItemStack[6];
+                for (int i = 0; i < 6; ++i) {
+                    int row = slotId / 9;
+                    {
+                        team[i] = inventory.getStackInSlot(row * 9 + i);
+                    }
+                }
+                TempParty tempParty = new TempParty(player);
+                tempParty.enterTempMode(utils.parseItemsToTeam(team));
+            }
+        }
+
+
+        return clickedItem;
+    }
 
 }
