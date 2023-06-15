@@ -4,7 +4,7 @@ plugins {
 }
 
 
-group = 'pixelmon.morak'
+group = 'de.morak'
 version = '1.0-SNAPSHOT'
 
 java {

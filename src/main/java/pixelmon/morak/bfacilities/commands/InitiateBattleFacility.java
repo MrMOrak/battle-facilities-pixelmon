@@ -1,27 +1,31 @@
 package pixelmon.morak.bfacilities.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import pixelmon.morak.bfacilities.gui.TeamSelectionContainer;
+
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class InitiateBattleFacility {
 
-    public static void register(CommandDispatcher<CommandSource> dispatcher){
+    private static final AtomicInteger counter = new AtomicInteger();
+
+    public static void register(CommandDispatcher<CommandSource> dispatcher) {
         dispatcher.register(
                 Commands.literal("initiateBattleFacility")
-                        .executes(context -> execute(context.getSource()))
-                );
+                        .executes(context -> execute(context))
+        );
     }
 
-    private static int execute(CommandSource source) throws CommandException, CommandSyntaxException {
-        if (source.getEntity() instanceof ServerPlayerEntity) {
-            ServerPlayerEntity player = (ServerPlayerEntity) source.getEntity();
-            player.openContainer(new TeamSelectionContainer(1, player));
-        }
+    private static int execute(CommandContext<CommandSource> context) throws CommandException {
+        PlayerEntity player = Objects.requireNonNull(context.getSource().getEntity()).world.getPlayerByUuid(context.getSource().getEntity().getUniqueID());
+        assert player != null;
+        player.openContainer(new TeamSelectionContainer(counter.incrementAndGet(), player));
         return 1;
     }
 }

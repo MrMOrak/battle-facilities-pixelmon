@@ -12,12 +12,13 @@ import net.minecraft.item.Items;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import org.jetbrains.annotations.NotNull;
+import pixelmon.morak.bfacilities.config.BFacilitiesConfig;
 import pixelmon.morak.bfacilities.gui.customslots.PlaceHolderSlot;
 import pixelmon.morak.bfacilities.gui.customslots.RerollSlot;
 import pixelmon.morak.bfacilities.gui.customslots.SelectSlot;
 import pixelmon.morak.bfacilities.gui.customslots.TeamSlot;
+import pixelmon.morak.bfacilities.tempParty.PartyParser;
 import pixelmon.morak.bfacilities.tempParty.TempParty;
-import pixelmon.morak.bfacilities.utils.Utils;
 
 import java.util.Random;
 
@@ -26,12 +27,10 @@ public class TeamSelectionContainer extends Container implements INamedContainer
 
     private static final int ROWS = 6;
     private static final int COLUMNS = 9;
-    private static int rerolls = 2;
+    private static int rerolls = BFacilitiesConfig.REROLLS.get();
     private static boolean pickUped = false;
 
     Random random = new Random();
-
-    Utils utils = new Utils();
 
     PlayerEntity player;
 
@@ -89,18 +88,12 @@ public class TeamSelectionContainer extends Container implements INamedContainer
                 this.addSlot(new Slot(player.inventory, column + row * 9 + 9, x, y));
             }
         }
-
         // Add player hotbar slots
         for (int column = 0; column < 9; ++column) {
             int x = 9 + column * 18;
             int y = 142;
             this.addSlot(new Slot(player.inventory, column, x, y));
         }
-        /*ItemStack stack = SpriteItemHelper.getPhoto(PokemonFactory.create(PixelmonSpecies.CHARIZARD.getValueUnsafe()));
-
-        ItemStack[] testStacks = new ItemStack[]{stack, stack, stack, stack, stack, stack};
-
-        new TempParty(utils.parseItemstoTeam(testStacks), player);*/
     }
 
 
@@ -161,9 +154,10 @@ public class TeamSelectionContainer extends Container implements INamedContainer
                     }
                 }
                 TempParty tempParty = new TempParty(player);
-                tempParty.enterTempMode(utils.parseItemsToTeam(team));
+                tempParty.enterTempMode(PartyParser.parseItemsToTeam(team, player));
             }
         }
+
 
 
         return clickedItem;
