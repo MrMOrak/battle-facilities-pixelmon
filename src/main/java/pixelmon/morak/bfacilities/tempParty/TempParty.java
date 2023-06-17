@@ -18,21 +18,22 @@ public class TempParty {
 
     public TempParty(PlayerEntity player) {
         this.playerParty = StorageProxy.getParty(player.getUniqueID());
-        playerParty.updatePlayer();
     }
 
     public void enterTempMode(Pokemon @NotNull [] pokemons) {
+        if(playerParty.inTemporaryMode()){
+            playerParty.setInTemporaryMode(false, Color.blue);
+        }
+        playerParty.enterTemporaryMode(Color.BLUE);
         LOGGER.info("Temp-Mode activated");
-        playerParty.setInTemporaryMode(true, Color.BLUE, pokemons);
-        playerParty.updatePlayer();
+        for (Pokemon pokemon : pokemons) {
+            playerParty.add(pokemon);
+        }
     }
 
     public static void leaveTempMode(PlayerEntity player) {
         if (StorageProxy.getParty(player.getUniqueID()).inTemporaryMode()) {
             StorageProxy.getParty(player.getUniqueID()).setInTemporaryMode(false, Color.BLUE);
-            StorageProxy.getParty(player.getUniqueID()).setInTemporaryMode(false, Color.BLUE);
-            playerParty.updatePlayer();
-            playerParty.updatePlayer();
         }
     }
 }

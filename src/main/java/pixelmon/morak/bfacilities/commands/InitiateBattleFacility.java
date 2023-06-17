@@ -1,19 +1,18 @@
 package pixelmon.morak.bfacilities.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.Message;
 import com.mojang.brigadier.context.CommandContext;
-import net.minecraft.command.CommandException;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.text.StringTextComponent;
 import pixelmon.morak.bfacilities.gui.TeamSelectionContainer;
 
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class InitiateBattleFacility {
-
-    private static final AtomicInteger counter = new AtomicInteger();
 
     public static void register(CommandDispatcher<CommandSource> dispatcher) {
         dispatcher.register(
@@ -22,10 +21,16 @@ public class InitiateBattleFacility {
         );
     }
 
-    private static int execute(CommandContext<CommandSource> context) throws CommandException {
-        PlayerEntity player = Objects.requireNonNull(context.getSource().getEntity()).world.getPlayerByUuid(context.getSource().getEntity().getUniqueID());
-        assert player != null;
-        player.openContainer(new TeamSelectionContainer(counter.incrementAndGet(), player));
-        return 1;
+    private static int execute(CommandContext<CommandSource> context) throws CommandSyntaxException {
+        Entity entity = context.getSource().getEntity();
+        if(entity instanceof ServerPlayerEntity) {
+            ServerPlayerEntity player = (ServerPlayerEntity) entity;
+            TeamSelectionContainer container = new TeamSelectionContainer(1601, player);
+            player.openContainer(container);
+            return 1;
+        } else {
+            Message errorMessageComponent = new StringTextComponent("Not a player!");
+            throw new CommandSyntaxException(new SimpleCommandExceptionType(errorMessageComponent), errorMessageComponent);
+        }
     }
 }

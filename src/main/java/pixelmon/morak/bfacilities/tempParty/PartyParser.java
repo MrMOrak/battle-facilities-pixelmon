@@ -1,5 +1,6 @@
 package pixelmon.morak.bfacilities.tempParty;
 
+import com.pixelmonmod.pixelmon.api.pokemon.InitializeCategory;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.api.pokemon.PokemonFactory;
 import com.pixelmonmod.pixelmon.api.registries.PixelmonSpecies;
@@ -11,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import pixelmon.morak.bfacilities.config.BFacilitiesConfig;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class PartyParser {
 
@@ -18,14 +20,15 @@ public class PartyParser {
 
     public static Pokemon @NotNull [] parseItemsToTeam(ItemStack[] itemStacks, PlayerEntity player) {
         Pokemon[] teamArray = new Pokemon[6];
+        final int level = BFacilitiesConfig.LEVEL.get();
         for (int i = 0; i < itemStacks.length; i++) {
             CompoundNBT dexTag = itemStacks[i].getTag();
             int dexNumber = dexTag.getInt("ndex");
             if (itemStacks[i].getItem() == Items.AIR) {
                 teamArray[i] = null;
             } else {
-                Pokemon photMon = PokemonFactory.create(PixelmonSpecies.fromDex(dexNumber).get());
-                final int level = BFacilitiesConfig.LEVEL.get();
+                Pokemon photMon = PokemonFactory.create(PixelmonSpecies.fromNationalDex(dexNumber));
+                photMon.initialize(InitializeCategory.INTRINSIC_FORCEFUL);
                 photMon.setOriginalTrainer(player);
                 photMon.setExperience(0);
                 photMon.setLevel(level);

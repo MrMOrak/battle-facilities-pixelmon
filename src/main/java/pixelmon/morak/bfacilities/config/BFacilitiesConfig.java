@@ -30,7 +30,7 @@ public final class BFacilitiesConfig {
         BUILDER.comment("Allow regional forms");
         REGIONAL = BUILDER.define("enable region forms", true);
 
-        BUILDER.comment("Allow regional gimmicks (dynamax/megas (っ °Д °;)っ)");
+        BUILDER.comment("Allow regional gimmicks (dynamax/megas :D)");
         GIMMICKS = BUILDER.define("enable gimmicks", true);
 
         BUILDER.pop();

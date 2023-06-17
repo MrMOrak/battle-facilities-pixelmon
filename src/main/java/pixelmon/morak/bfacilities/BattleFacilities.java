@@ -25,7 +25,7 @@ public class BattleFacilities {
         MinecraftForge.EVENT_BUS.register(new PlayerLoggedOutEventListener());
 
         ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
-        ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.COMMON, BFacilitiesConfig.SPEC, MOD_ID + "-server.toml");
+        ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.COMMON, BFacilitiesConfig.SPEC, MOD_ID + "-common.toml");
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
