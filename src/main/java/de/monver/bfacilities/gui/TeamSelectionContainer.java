@@ -19,12 +19,16 @@ import net.minecraft.item.Items;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Random;
 
 
 public class TeamSelectionContainer extends Container implements INamedContainerProvider {
 
+
+    final static Logger LOGGER = LoggerFactory.getLogger(TeamSelectionContainer.class);
     private boolean pickUped = false;
 
     private int rerolls1;
@@ -187,6 +191,7 @@ public class TeamSelectionContainer extends Container implements INamedContainer
                         team[i] = inventory.getStackInSlot(row * 9 + i);
                     }
                 }
+                LOGGER.info("Initiate temporary party for" + player.getName().getString());
                 TempParty tempParty = new TempParty(player);
                 tempParty.enterTempMode(PartyParser.parseItemsToTeam(team, player));
             }
