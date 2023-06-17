@@ -3,20 +3,30 @@ package de.monver.bfacilities.tempParty;
 import com.pixelmonmod.pixelmon.api.battles.AttackCategory;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.api.pokemon.stats.Moveset;
+import com.pixelmonmod.pixelmon.battles.attacks.ImmutableAttack;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class MoveGenerator {
 
     public static Pokemon generateMoveSetForPokemon(Pokemon pokemon) {
         boolean type = checkPhySpc(pokemon);
-        Moveset moveset = pokemon.getMoveset();
+        Moveset moveSet = pokemon.getMoveset();
+        List<ImmutableAttack> allMoves = pokemon.getForm().getMoves().getAllMoves();
         List<AttackCategory> moveCats = new ArrayList<>();
-        for (int i = 0; i < moveset.size(); i++) {
-            moveCats.add(i, moveset.get(i).getAttackCategory());
-        }
+        if (allMoves.size() <= 4) {
+            for (int i = 0; i < allMoves.size(); i++) {
+                moveSet.set(i, allMoves.get(i).ofMutable());
+            }
+        } else {
+            Collections.shuffle(allMoves);
+            for (int i = 0; i < 4; i++) {
+                moveCats.add(i, moveSet.get(i).getAttackCategory());
+                moveSet.set(i, allMoves.get(i).ofMutable());
+            }
+        /*
         if (type) {
+
             while (!moveCats.contains(AttackCategory.PHYSICAL)) {
                 pokemon.rerollMoveset();
                 moveset = pokemon.getMoveset();
@@ -32,6 +42,9 @@ public class MoveGenerator {
                     moveCats.add(i, moveset.get(i).getAttackCategory());
                 }
             }
+        }
+        This code block is retired till needed
+         */
         }
         return pokemon;
     }
