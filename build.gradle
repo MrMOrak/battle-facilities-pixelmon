@@ -4,7 +4,7 @@ plugins {
 }
 
 
-group = 'de.morak'
+group = 'de.monver'
 version = '1.0-SNAPSHOT'
 
 java {

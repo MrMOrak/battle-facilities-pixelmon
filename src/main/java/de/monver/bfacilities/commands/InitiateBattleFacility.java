@@ -1,16 +1,16 @@
-package pixelmon.morak.bfacilities.commands;
+package de.monver.bfacilities.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.Message;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import de.monver.bfacilities.gui.TeamSelectionContainer;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
-import pixelmon.morak.bfacilities.gui.TeamSelectionContainer;
 
 public class InitiateBattleFacility {
 

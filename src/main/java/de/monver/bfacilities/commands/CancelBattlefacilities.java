@@ -1,12 +1,12 @@
-package pixelmon.morak.bfacilities.commands;
+package de.monver.bfacilities.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
+import de.monver.bfacilities.tempParty.TempParty;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
-import pixelmon.morak.bfacilities.tempParty.TempParty;
 
 import java.util.Objects;
 

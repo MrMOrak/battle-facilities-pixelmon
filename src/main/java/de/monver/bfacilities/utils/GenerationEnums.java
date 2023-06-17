@@ -1,4 +1,4 @@
-package pixelmon.morak.bfacilities.utils;
+package de.monver.bfacilities.utils;
 
 public enum GenerationEnums {
     I,

@@ -1,4 +1,4 @@
-package pixelmon.morak.bfacilities.gui.customslots;
+package de.monver.bfacilities.gui.customslots;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;

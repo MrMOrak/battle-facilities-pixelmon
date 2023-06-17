@@ -1,4 +1,4 @@
-package pixelmon.morak.bfacilities.tempParty;
+package de.monver.bfacilities.tempParty;
 
 import com.pixelmonmod.pixelmon.api.battles.AttackCategory;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;

@@ -1,5 +1,8 @@
-package pixelmon.morak.bfacilities;
+package de.monver.bfacilities;
 
+import de.monver.bfacilities.commands.InitiateBattleFacility;
+import de.monver.bfacilities.config.BFacilitiesConfig;
+import de.monver.bfacilities.tempParty.TempParty;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -9,10 +12,7 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.FMLNetworkConstants;
 import org.apache.commons.lang3.tuple.Pair;
-import pixelmon.morak.bfacilities.commands.CancelBattlefacilities;
-import pixelmon.morak.bfacilities.commands.InitiateBattleFacility;
-import pixelmon.morak.bfacilities.config.BFacilitiesConfig;
-import pixelmon.morak.bfacilities.tempParty.TempParty;
+import de.monver.bfacilities.commands.CancelBattlefacilities;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("bfacilities")

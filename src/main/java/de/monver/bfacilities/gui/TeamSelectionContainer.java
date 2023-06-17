@@ -1,8 +1,15 @@
-package pixelmon.morak.bfacilities.gui;
+package de.monver.bfacilities.gui;
 
 import com.pixelmonmod.pixelmon.api.pokemon.PokemonFactory;
 import com.pixelmonmod.pixelmon.api.registries.PixelmonSpecies;
 import com.pixelmonmod.pixelmon.api.util.helpers.SpriteItemHelper;
+import de.monver.bfacilities.config.BFacilitiesConfig;
+import de.monver.bfacilities.gui.customslots.PlaceHolderSlot;
+import de.monver.bfacilities.gui.customslots.RerollSlot;
+import de.monver.bfacilities.gui.customslots.SelectSlot;
+import de.monver.bfacilities.gui.customslots.TeamSlot;
+import de.monver.bfacilities.tempParty.PartyParser;
+import de.monver.bfacilities.tempParty.TempParty;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -12,13 +19,6 @@ import net.minecraft.item.Items;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import org.jetbrains.annotations.NotNull;
-import pixelmon.morak.bfacilities.config.BFacilitiesConfig;
-import pixelmon.morak.bfacilities.gui.customslots.PlaceHolderSlot;
-import pixelmon.morak.bfacilities.gui.customslots.RerollSlot;
-import pixelmon.morak.bfacilities.gui.customslots.SelectSlot;
-import pixelmon.morak.bfacilities.gui.customslots.TeamSlot;
-import pixelmon.morak.bfacilities.tempParty.PartyParser;
-import pixelmon.morak.bfacilities.tempParty.TempParty;
 
 import java.util.Random;
 

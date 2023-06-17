@@ -1,18 +1,17 @@
-package pixelmon.morak.bfacilities.tempParty;
+package de.monver.bfacilities.tempParty;
 
 import com.pixelmonmod.pixelmon.api.pokemon.InitializeCategory;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.api.pokemon.PokemonFactory;
 import com.pixelmonmod.pixelmon.api.registries.PixelmonSpecies;
+import de.monver.bfacilities.config.BFacilitiesConfig;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import org.jetbrains.annotations.NotNull;
-import pixelmon.morak.bfacilities.config.BFacilitiesConfig;
 
 import java.util.Random;
-import java.util.UUID;
 
 public class PartyParser {
 

@@ -1,8 +1,8 @@
-package pixelmon.morak.bfacilities.config;
+package de.monver.bfacilities.config;
 
 import com.electronwill.nightconfig.core.Config;
 import net.minecraftforge.common.ForgeConfigSpec;
-import pixelmon.morak.bfacilities.utils.GenerationEnums;
+import de.monver.bfacilities.utils.GenerationEnums;
 
 public final class BFacilitiesConfig {
 
