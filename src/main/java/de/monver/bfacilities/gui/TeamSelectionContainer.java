@@ -25,13 +25,16 @@ import java.util.Random;
 
 public class TeamSelectionContainer extends Container implements INamedContainerProvider {
 
-    private int rerolls = BFacilitiesConfig.REROLLS.get();
     private boolean pickUped = false;
+
+    private int rerolls1;
+    private int rerolls2;
+    private int rerolls3;
+    private int rerolls4;
 
     Random random = new Random();
 
     PlayerEntity player;
-
 
     private final Inventory inventory;
 
@@ -42,12 +45,17 @@ public class TeamSelectionContainer extends Container implements INamedContainer
         int COLUMNS = 9;
         this.inventory = new Inventory(ROWS * COLUMNS);
 
+        this.rerolls1 = BFacilitiesConfig.REROLLS.get();
+        this.rerolls2 = BFacilitiesConfig.REROLLS.get();
+        this.rerolls3 = BFacilitiesConfig.REROLLS.get();
+        this.rerolls4 = BFacilitiesConfig.REROLLS.get();
+
         int slotIndex = 0;
 
 
         ItemStack paneYellow = new ItemStack(Items.YELLOW_STAINED_GLASS_PANE);
         ItemStack paneCyan = new ItemStack(Items.CYAN_STAINED_GLASS_PANE);
-
+        ItemStack rerollButton = new ItemStack((Items.RED_STAINED_GLASS_PANE)).setDisplayName(new StringTextComponent("Reroll"));
 
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 9; j++) {
@@ -75,7 +83,7 @@ public class TeamSelectionContainer extends Container implements INamedContainer
                     }
                     if (j == 8) {
                         this.addSlot(new RerollSlot(inventory, slotIndex, 8 + j * 18, 18 + i * 18));
-                        inventory.setInventorySlotContents(slotIndex, new ItemStack((Items.RED_STAINED_GLASS_PANE)).setDisplayName(new StringTextComponent("Reroll")));
+                        inventory.setInventorySlotContents(slotIndex, rerollButton);
                     }
                 }
                 slotIndex++;
@@ -130,19 +138,44 @@ public class TeamSelectionContainer extends Container implements INamedContainer
 
         if (clickType == ClickType.PICKUP) {
             if (slot instanceof RerollSlot) {
-                if (rerolls == 0) {
-                    player.sendMessage(new StringTextComponent("Out of rerolls"), player.getUniqueID());
-                    return clickedItem;
+                switch (slotId / 9) {
+                    case 1:
+                        if (this.rerolls1 == 0) {
+                            player.sendMessage(new StringTextComponent("Out of rerolls for this line"), player.getUniqueID());
+                            return clickedItem;
+                        }
+                        this.rerolls1 -= 1;
+                        break;
+                    case 2:
+                        if (this.rerolls2 == 0) {
+                            player.sendMessage(new StringTextComponent("Out of rerolls for this line"), player.getUniqueID());
+                            return clickedItem;
+                        }
+                        this.rerolls2 -= 1;
+                        break;
+                    case 3:
+                        if (this.rerolls3 == 0) {
+                            player.sendMessage(new StringTextComponent("Out of rerolls for this line"), player.getUniqueID());
+                            return clickedItem;
+                        }
+                        this.rerolls3 -= 1;
+                        break;
+                    case 4:
+                        if (this.rerolls4 == 0) {
+                            player.sendMessage(new StringTextComponent("Out of rerolls for this line"), player.getUniqueID());
+                            return clickedItem;
+                        }
+                        this.rerolls4 -= 1;
+                        break;
                 }
                 for (int i = 0; i < 6; ++i) {
                     int row = slotId / 9;
                     int rand = random.nextInt(904) + 1;
                     ItemStack photo = SpriteItemHelper.getPhoto(PokemonFactory.create(PixelmonSpecies.fromNationalDex(rand)));
                     inventory.setInventorySlotContents(row * 9 + i, photo.setDisplayName(PixelmonSpecies.fromNationalDex(rand).getTranslatedName()));
-
                 }
-                rerolls -= 1;
             }
+
         }
 
         if (clickType != ClickType.SWAP) {
@@ -158,7 +191,6 @@ public class TeamSelectionContainer extends Container implements INamedContainer
                 tempParty.enterTempMode(PartyParser.parseItemsToTeam(team, player));
             }
         }
-
 
 
         return clickedItem;
