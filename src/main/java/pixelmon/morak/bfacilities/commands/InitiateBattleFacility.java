@@ -1,27 +1,36 @@
 package pixelmon.morak.bfacilities.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.Message;
+import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.command.CommandException;
+import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.text.StringTextComponent;
 import pixelmon.morak.bfacilities.gui.TeamSelectionContainer;
 
 public class InitiateBattleFacility {
 
-    public static void register(CommandDispatcher<CommandSource> dispatcher){
+    public static void register(CommandDispatcher<CommandSource> dispatcher) {
         dispatcher.register(
                 Commands.literal("initiateBattleFacility")
-                        .executes(context -> execute(context.getSource()))
-                );
+                        .executes(context -> execute(context))
+        );
     }
 
-    private static int execute(CommandSource source) throws CommandException, CommandSyntaxException {
-        if (source.getEntity() instanceof ServerPlayerEntity) {
-            ServerPlayerEntity player = (ServerPlayerEntity) source.getEntity();
-            player.openContainer(new TeamSelectionContainer(1, player));
+    private static int execute(CommandContext<CommandSource> context) throws CommandSyntaxException {
+        Entity entity = context.getSource().getEntity();
+        if(entity instanceof ServerPlayerEntity) {
+            ServerPlayerEntity player = (ServerPlayerEntity) entity;
+            TeamSelectionContainer container = new TeamSelectionContainer(1601, player);
+            player.openContainer(container);
+            return 1;
+        } else {
+            Message errorMessageComponent = new StringTextComponent("Not a player!");
+            throw new CommandSyntaxException(new SimpleCommandExceptionType(errorMessageComponent), errorMessageComponent);
         }
-        return 1;
     }
 }
