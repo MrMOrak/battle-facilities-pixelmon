@@ -27,7 +27,7 @@ public class PartyParser {
                 teamArray[i] = null;
             } else {
                 Pokemon photMon = PokemonFactory.create(PixelmonSpecies.fromNationalDex(dexNumber));
-                photMon.initialize(InitializeCategory.INTRINSIC_FORCEFUL);
+                photMon.initialize(InitializeCategory.INTRINSIC);
                 photMon.setOriginalTrainer(player);
                 photMon.setExperience(0);
                 photMon.setLevel(level);
