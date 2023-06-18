@@ -128,6 +128,10 @@ public class TeamSelectionContainer extends Container implements INamedContainer
     @Override
     public @NotNull ItemStack slotClick(int slotId, int dragType, @NotNull ClickType clickType, @NotNull PlayerEntity player) {
 
+        if (slotId > 53 || slotId < 0) {
+            return ItemStack.EMPTY;
+        }
+
         Slot slot = inventorySlots.get(slotId);
 
         ItemStack clickedItem = inventory.getStackInSlot(slotId);
