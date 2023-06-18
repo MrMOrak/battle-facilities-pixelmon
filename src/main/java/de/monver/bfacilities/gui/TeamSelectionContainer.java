@@ -29,7 +29,6 @@ public class TeamSelectionContainer extends Container implements INamedContainer
 
 
     final static Logger LOGGER = LoggerFactory.getLogger(TeamSelectionContainer.class);
-    private boolean pickUped = false;
 
     private int rerolls1;
     private int rerolls2;
@@ -122,25 +121,30 @@ public class TeamSelectionContainer extends Container implements INamedContainer
 
     @Override
     public @NotNull ITextComponent getDisplayName() {
-        return new StringTextComponent("Select your Team");
+        return new StringTextComponent("Select your Team:");
     }
 
     @Override
     public @NotNull ItemStack slotClick(int slotId, int dragType, @NotNull ClickType clickType, @NotNull PlayerEntity player) {
 
-        Slot slot = inventorySlots.get(slotId);
-
-        ItemStack clickedItem = inventory.getStackInSlot(slotId);
-        inventory.setInventorySlotContents(slotId, clickedItem);
-
-        if (pickUped) {
-            pickUped = false;
-            return clickedItem;
-        }
-
-        pickUped = true;
+        Slot slot = getSlot(slotId);
+        ItemStack clickedItem = player.inventory.getItemStack();
 
         if (clickType == ClickType.PICKUP) {
+            if (slot instanceof SelectSlot) {
+                ItemStack[] team = new ItemStack[6];
+                for (int i = 0; i < 6; ++i) {
+                    int row = slotId / 9;
+                    {
+                        team[i] = inventory.getStackInSlot(row * 9 + i);
+                    }
+                }
+                LOGGER.info("Initiate temporary party for " + player.getName().getString());
+                TempParty tempParty = new TempParty(player);
+                tempParty.enterTempMode(PartyParser.parseItemsToTeam(team, player));
+
+
+            }
             if (slot instanceof RerollSlot) {
                 switch (slotId / 9) {
                     case 1:
@@ -179,26 +183,13 @@ public class TeamSelectionContainer extends Container implements INamedContainer
                     inventory.setInventorySlotContents(row * 9 + i, photo.setDisplayName(PixelmonSpecies.fromNationalDex(rand).getTranslatedName()));
                 }
             }
-
-        }
-
-        if (clickType != ClickType.SWAP) {
-            if (slot instanceof SelectSlot) {
-                ItemStack[] team = new ItemStack[6];
-                for (int i = 0; i < 6; ++i) {
-                    int row = slotId / 9;
-                    {
-                        team[i] = inventory.getStackInSlot(row * 9 + i);
-                    }
-                }
-                LOGGER.info("Initiate temporary party for" + player.getName().getString());
-                TempParty tempParty = new TempParty(player);
-                tempParty.enterTempMode(PartyParser.parseItemsToTeam(team, player));
+            if(!clickedItem.isEmpty()){
+                slot.putStack(clickedItem.copy());
+                slot.onSlotChanged();
             }
+            return ItemStack.EMPTY;
         }
-
-
-        return clickedItem;
+        return super.slotClick(slotId, dragType, clickType, player);
     }
 
 }
