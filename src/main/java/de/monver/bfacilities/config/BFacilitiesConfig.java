@@ -21,7 +21,7 @@ public final class BFacilitiesConfig {
         BUILDER.comment("Sets the level for the battle facilities teams");
         LEVEL = BUILDER.defineInRange("level", 50, 1, 100);
 
-        BUILDER.comment("Sets up until which generation the pokemon are chosen from");
+        BUILDER.comment("Sets the generation from which the pokemon are pulled");
         GENERATION = BUILDER.defineEnum("generation", GenerationEnums.ALL);
 
         BUILDER.comment("Sets the amount of rerolls for the individual teams");
