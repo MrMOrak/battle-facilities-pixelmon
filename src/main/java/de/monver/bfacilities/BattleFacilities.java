@@ -1,7 +1,9 @@
 package de.monver.bfacilities;
 
+import com.pixelmonmod.pixelmon.Pixelmon;
 import de.monver.bfacilities.commands.InitiateBattleFacility;
 import de.monver.bfacilities.config.BFacilitiesConfig;
+import de.monver.bfacilities.events.DexAdditionEvent;
 import de.monver.bfacilities.tempParty.TempParty;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -10,6 +12,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.network.FMLNetworkConstants;
 import org.apache.commons.lang3.tuple.Pair;
 import de.monver.bfacilities.commands.CancelBattlefacilities;
@@ -35,6 +38,11 @@ public class BattleFacilities {
     public void registerCommands(RegisterCommandsEvent event) {
         InitiateBattleFacility.register(event.getDispatcher());
         CancelBattlefacilities.register(event.getDispatcher());
+    }
+
+    @SubscribeEvent
+    public void serverStarting(FMLServerStartingEvent event){
+        Pixelmon.EVENT_BUS.register(new DexAdditionEvent());
     }
 
     public static class PlayerLoggedOutEventListener {
