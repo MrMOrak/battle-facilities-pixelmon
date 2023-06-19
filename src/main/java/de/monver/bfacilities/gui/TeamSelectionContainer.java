@@ -30,16 +30,17 @@ public class TeamSelectionContainer extends Container implements INamedContainer
 
     final static Logger LOGGER = LoggerFactory.getLogger(TeamSelectionContainer.class);
 
-    private int rerolls1;
-    private int rerolls2;
-    private int rerolls3;
-    private int rerolls4;
+    PlayerEntity player;
+    private final Inventory inventory;
+    private int rerolls1, rerolls2, rerolls3, rerolls4;
+
+    ItemStack paneYellow = new ItemStack(Items.YELLOW_STAINED_GLASS_PANE);
+    ItemStack paneCyan = new ItemStack(Items.CYAN_STAINED_GLASS_PANE);
+    ItemStack paneGray = new ItemStack((Items.GRAY_STAINED_GLASS_PANE));
+    ItemStack selectButton = new ItemStack((Items.GREEN_STAINED_GLASS_PANE)).setDisplayName(new StringTextComponent("Select this team"));
+    ItemStack rerollButton = new ItemStack((Items.RED_STAINED_GLASS_PANE)).setDisplayName(new StringTextComponent("Reroll"));
 
     Random random = new Random();
-
-    PlayerEntity player;
-
-    private final Inventory inventory;
 
     public TeamSelectionContainer(int windowId, PlayerEntity player) {
         super(ContainerType.GENERIC_9X6, windowId);
@@ -47,21 +48,11 @@ public class TeamSelectionContainer extends Container implements INamedContainer
         int ROWS = 6;
         int COLUMNS = 9;
         this.inventory = new Inventory(ROWS * COLUMNS);
-
-        this.rerolls1 = BFacilitiesConfig.REROLLS.get();
-        this.rerolls2 = BFacilitiesConfig.REROLLS.get();
-        this.rerolls3 = BFacilitiesConfig.REROLLS.get();
-        this.rerolls4 = BFacilitiesConfig.REROLLS.get();
-
+        this.rerolls1 = this.rerolls2 = this.rerolls3 = this.rerolls4 = BFacilitiesConfig.REROLLS.get();
         int slotIndex = 0;
 
-
-        ItemStack paneYellow = new ItemStack(Items.YELLOW_STAINED_GLASS_PANE);
-        ItemStack paneCyan = new ItemStack(Items.CYAN_STAINED_GLASS_PANE);
-        ItemStack rerollButton = new ItemStack((Items.RED_STAINED_GLASS_PANE)).setDisplayName(new StringTextComponent("Reroll"));
-
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 9; j++) {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLUMNS; j++) {
                 if (i == 5 || i == 0) {
                     this.addSlot(new PlaceHolderSlot(inventory, slotIndex, 8 + j * 18, 18 + i * 18));
                     if (slotIndex % 2 == 0) {
@@ -78,11 +69,11 @@ public class TeamSelectionContainer extends Container implements INamedContainer
                     }
                     if (j == 6) {
                         this.addSlot(new PlaceHolderSlot(inventory, slotIndex, 8 + j * 18, 18 + i * 18));
-                        inventory.setInventorySlotContents(slotIndex, new ItemStack((Items.GRAY_STAINED_GLASS_PANE)));
+                        inventory.setInventorySlotContents(slotIndex, paneGray);
                     }
                     if (j == 7) {
                         this.addSlot(new SelectSlot(inventory, slotIndex, 8 + j * 18, 18 + i * 18));
-                        inventory.setInventorySlotContents(slotIndex, new ItemStack((Items.GREEN_STAINED_GLASS_PANE)).setDisplayName(new StringTextComponent("Select this team")));
+                        inventory.setInventorySlotContents(slotIndex, selectButton);
                     }
                     if (j == 8) {
                         this.addSlot(new RerollSlot(inventory, slotIndex, 8 + j * 18, 18 + i * 18));

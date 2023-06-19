@@ -17,7 +17,7 @@ public class TempParty {
     }
 
     public void enterTempMode(Pokemon @NotNull [] pokemons) {
-        if(playerParty.inTemporaryMode()){
+        if (playerParty.inTemporaryMode()) {
             playerParty.setInTemporaryMode(false, Color.blue);
         }
         playerParty.enterTemporaryMode(Color.BLUE);
