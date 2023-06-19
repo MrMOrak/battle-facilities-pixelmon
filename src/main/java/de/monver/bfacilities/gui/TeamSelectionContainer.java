@@ -53,6 +53,7 @@ public class TeamSelectionContainer extends Container implements INamedContainer
         for(int i = 0; i < REROLLS.length; i++){
             REROLLS[i] = BFacilitiesConfig.REROLLS.get();
         }
+        rerollButton.setCount(BFacilitiesConfig.REROLLS.get());
 
         int slotIndex = 0;
 
@@ -145,7 +146,8 @@ public class TeamSelectionContainer extends Container implements INamedContainer
 
             }
             if (slot instanceof RerollSlot) {
-                return Utils.reroller(slotId/9 - 1, REROLLS, player, inventory);
+                inventory.setInventorySlotContents(slotId, Utils.reroller(slotId/9 - 1, REROLLS, player, inventory));
+                return ItemStack.EMPTY;
             }
             if(!clickedItem.isEmpty()){
                 slot.putStack(clickedItem.copy());
