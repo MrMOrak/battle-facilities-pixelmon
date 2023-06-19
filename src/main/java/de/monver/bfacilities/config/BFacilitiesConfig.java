@@ -10,7 +10,7 @@ public final class BFacilitiesConfig {
     public static final ForgeConfigSpec SPEC;
 
     public static final ForgeConfigSpec.IntValue LEVEL;
-    public static final ForgeConfigSpec.ConfigValue<GenerationEnums> GENERATION;
+    public static final ForgeConfigSpec.EnumValue<GenerationEnums> GENERATION;
     public static final ForgeConfigSpec.BooleanValue REGIONAL;
     public static final ForgeConfigSpec.BooleanValue GIMMICKS;
     public static final ForgeConfigSpec.IntValue REROLLS;
@@ -21,8 +21,8 @@ public final class BFacilitiesConfig {
         BUILDER.comment("Sets the level for the battle facilities teams");
         LEVEL = BUILDER.defineInRange("level", 50, 1, 100);
 
-        BUILDER.comment("Sets the generation from which the pokemon are pulled");
-        GENERATION = BUILDER.define("generation", GenerationEnums.ALL);
+        BUILDER.comment("Sets up until which generation the pokemon are chosen from");
+        GENERATION = BUILDER.defineEnum("generation", GenerationEnums.ALL);
 
         BUILDER.comment("Sets the amount of rerolls for the individual teams");
         REROLLS = BUILDER.defineInRange("rerolls", 2, 0, 1000000);
