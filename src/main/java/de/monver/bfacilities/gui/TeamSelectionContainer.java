@@ -30,9 +30,12 @@ public class TeamSelectionContainer extends Container implements INamedContainer
 
     final static Logger LOGGER = LoggerFactory.getLogger(TeamSelectionContainer.class);
 
+    private final int[] REROLLS = new int[4];
+
+    Random random = new Random();
+
     PlayerEntity player;
     private final Inventory inventory;
-    private int rerolls1, rerolls2, rerolls3, rerolls4;
 
     ItemStack paneYellow = new ItemStack(Items.YELLOW_STAINED_GLASS_PANE);
     ItemStack paneCyan = new ItemStack(Items.CYAN_STAINED_GLASS_PANE);
@@ -40,15 +43,17 @@ public class TeamSelectionContainer extends Container implements INamedContainer
     ItemStack selectButton = new ItemStack((Items.GREEN_STAINED_GLASS_PANE)).setDisplayName(new StringTextComponent("Select this team"));
     ItemStack rerollButton = new ItemStack((Items.RED_STAINED_GLASS_PANE)).setDisplayName(new StringTextComponent("Reroll"));
 
-    Random random = new Random();
-
     public TeamSelectionContainer(int windowId, PlayerEntity player) {
         super(ContainerType.GENERIC_9X6, windowId);
         this.player = player;
         int ROWS = 6;
         int COLUMNS = 9;
         this.inventory = new Inventory(ROWS * COLUMNS);
-        this.rerolls1 = this.rerolls2 = this.rerolls3 = this.rerolls4 = BFacilitiesConfig.REROLLS.get();
+
+        for(int i = 0; i < REROLLS.length; i++){
+            REROLLS[i] = BFacilitiesConfig.REROLLS.get();
+        }
+
         int slotIndex = 0;
 
         for (int i = 0; i < ROWS; i++) {
@@ -138,45 +143,9 @@ public class TeamSelectionContainer extends Container implements INamedContainer
                 TempParty tempParty = new TempParty(player);
                 tempParty.enterTempMode(PartyParser.parseItemsToTeam(team, player));
 
-
             }
             if (slot instanceof RerollSlot) {
-                switch (slotId / 9) {
-                    case 1:
-                        if (this.rerolls1 == 0) {
-                            player.sendMessage(new StringTextComponent("Out of rerolls for this line"), player.getUniqueID());
-                            return clickedItem;
-                        }
-                        this.rerolls1 -= 1;
-                        break;
-                    case 2:
-                        if (this.rerolls2 == 0) {
-                            player.sendMessage(new StringTextComponent("Out of rerolls for this line"), player.getUniqueID());
-                            return clickedItem;
-                        }
-                        this.rerolls2 -= 1;
-                        break;
-                    case 3:
-                        if (this.rerolls3 == 0) {
-                            player.sendMessage(new StringTextComponent("Out of rerolls for this line"), player.getUniqueID());
-                            return clickedItem;
-                        }
-                        this.rerolls3 -= 1;
-                        break;
-                    case 4:
-                        if (this.rerolls4 == 0) {
-                            player.sendMessage(new StringTextComponent("Out of rerolls for this line"), player.getUniqueID());
-                            return clickedItem;
-                        }
-                        this.rerolls4 -= 1;
-                        break;
-                }
-                for (int i = 0; i < 6; ++i) {
-                    int row = slotId / 9;
-                    int rand = random.nextInt(904) + 1;
-                    ItemStack photo = SpriteItemHelper.getPhoto(PokemonFactory.create(PixelmonSpecies.fromNationalDex(rand)));
-                    inventory.setInventorySlotContents(row * 9 + i, photo.setDisplayName(PixelmonSpecies.fromNationalDex(rand).getTranslatedName()));
-                }
+                return Utils.reroller(slotId/9 - 1, REROLLS, player, inventory);
             }
             if(!clickedItem.isEmpty()){
                 slot.putStack(clickedItem.copy());
