@@ -1,6 +1,5 @@
 package de.monver.bfacilities.gui.customslots;
 
-
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;

@@ -10,8 +10,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.Random;
+
+import static com.pixelmonmod.pixelmon.api.util.helpers.RandomHelper.getRandomChance;
 
 public class PartyParser {
 
@@ -33,8 +34,13 @@ public class PartyParser {
                 photMon.setLevel(level);
                 photMon.setDoesLevel(false);
                 MoveGenerator.generateMoveSetForPokemon(photMon);
-                if (RANDOM.nextInt(4097) > 4095) {
+                if (getRandomChance(0.01F)) {
                     photMon.setShiny(true);
+                }
+                if (getRandomChance(0.2F) && photMon.getForm().getAbilities().getHiddenAbilities().length != 0){
+                    photMon.setAbility(photMon.getForm().getAbilities().getHiddenAbilities()[0]);
+                } else {
+                    photMon.setAbility(photMon.getForm().getAbilities().getRandomAbility());
                 }
                 teamArray[i] = photMon;
             }
