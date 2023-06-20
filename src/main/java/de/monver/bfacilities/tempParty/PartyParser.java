@@ -32,9 +32,7 @@ public class PartyParser {
                 photMon.setLevel(level);
                 photMon.setDoesLevel(false);
                 MoveGenerator.generateMoveSetForPokemon(photMon);
-
                 FormHelper.checkForRegionalForm(photMon);
-
                 if (getRandomChance(0.01F)) {
                     photMon.setShiny(true);
                 }
