@@ -1,7 +1,7 @@
 package de.monver.bfacilities;
 
 import com.pixelmonmod.pixelmon.Pixelmon;
-import de.monver.bfacilities.commands.bfacility;
+import de.monver.bfacilities.commands.BfacilityCommand;
 import de.monver.bfacilities.config.BFacilitiesConfig;
 import de.monver.bfacilities.events.DexAdditionEvent;
 import de.monver.bfacilities.tempParty.TempParty;
@@ -36,7 +36,7 @@ public class BattleFacilities {
 
     @SubscribeEvent
     public void registerCommands(RegisterCommandsEvent event) {
-        bfacility.register(event.getDispatcher());
+        BfacilityCommand.register(event.getDispatcher());
     }
 
     @SubscribeEvent

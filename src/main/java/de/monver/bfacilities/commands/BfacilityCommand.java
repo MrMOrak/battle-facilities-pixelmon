@@ -16,7 +16,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 
-public class bfacility {
+public class BfacilityCommand {
 
     public static void register(CommandDispatcher<CommandSource> dispatcher){
         dispatcher.register(
