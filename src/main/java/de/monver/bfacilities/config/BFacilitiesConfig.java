@@ -13,7 +13,6 @@ public final class BFacilitiesConfig {
     public static final ForgeConfigSpec.EnumValue<Generations> GENERATION;
     public static final ForgeConfigSpec.BooleanValue MULTIPLE_GEN;
     public static final ForgeConfigSpec.BooleanValue REGIONAL;
-    public static final ForgeConfigSpec.BooleanValue GIMMICKS;
     public static final ForgeConfigSpec.IntValue REROLLS;
 
 
@@ -32,10 +31,7 @@ public final class BFacilitiesConfig {
         REROLLS = BUILDER.defineInRange("rerolls", 2, 0, 1000000);
 
         BUILDER.comment("Allow regional forms");
-        REGIONAL = BUILDER.define("enable region forms", true);
-
-        BUILDER.comment("Allow regional gimmicks (dynamax/megas :D)");
-        GIMMICKS = BUILDER.define("enable gimmicks", true);
+        REGIONAL = BUILDER.define("enable regional forms", true);
 
         BUILDER.pop();
         Config.setInsertionOrderPreserved(true);

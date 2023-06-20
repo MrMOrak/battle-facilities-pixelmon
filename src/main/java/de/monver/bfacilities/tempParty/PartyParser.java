@@ -16,8 +16,6 @@ import static com.pixelmonmod.pixelmon.api.util.helpers.RandomHelper.getRandomCh
 
 public class PartyParser {
 
-    private static final Random RANDOM = new Random();
-
     public static Pokemon @NotNull [] parseItemsToTeam(ItemStack[] itemStacks, PlayerEntity player) {
         Pokemon[] teamArray = new Pokemon[6];
         final int level = BFacilitiesConfig.LEVEL.get();
@@ -34,6 +32,9 @@ public class PartyParser {
                 photMon.setLevel(level);
                 photMon.setDoesLevel(false);
                 MoveGenerator.generateMoveSetForPokemon(photMon);
+
+                FormHelper.checkForRegionalForm(photMon);
+
                 if (getRandomChance(0.01F)) {
                     photMon.setShiny(true);
                 }
