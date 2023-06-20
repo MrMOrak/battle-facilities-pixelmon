@@ -10,6 +10,7 @@ import de.monver.bfacilities.gui.customslots.SelectSlot;
 import de.monver.bfacilities.gui.customslots.TeamSlot;
 import de.monver.bfacilities.tempParty.PartyParser;
 import de.monver.bfacilities.tempParty.TempParty;
+import de.monver.bfacilities.utils.GenerationHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -22,7 +23,6 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Random;
 
 
 public class TeamSelectionContainer extends Container implements INamedContainerProvider {
@@ -31,8 +31,6 @@ public class TeamSelectionContainer extends Container implements INamedContainer
     final static Logger LOGGER = LoggerFactory.getLogger(TeamSelectionContainer.class);
 
     private final int[] REROLLS = new int[4];
-
-    Random random = new Random();
 
     PlayerEntity player;
     private final Inventory inventory;
@@ -69,7 +67,7 @@ public class TeamSelectionContainer extends Container implements INamedContainer
                 } else {
                     if (j < 6) {
                         this.addSlot(new TeamSlot(inventory, slotIndex, 8 + j * 18, 18 + i * 18));
-                        int rand = random.nextInt(904) + 1;
+                        int rand = GenerationHelper.getDexNumber();
                         ItemStack photo = SpriteItemHelper.getPhoto(PokemonFactory.create(PixelmonSpecies.fromNationalDex(rand)));
                         inventory.setInventorySlotContents(slotIndex, photo.setDisplayName(PixelmonSpecies.fromNationalDex(rand).getTranslatedName()));
                     }
@@ -146,7 +144,7 @@ public class TeamSelectionContainer extends Container implements INamedContainer
 
             }
             if (slot instanceof RerollSlot) {
-                inventory.setInventorySlotContents(slotId, Utils.reroller(slotId/9 - 1, REROLLS, player, inventory));
+                inventory.setInventorySlotContents(slotId, RerollHelper.reroller(slotId/9 - 1, REROLLS, player, inventory));
                 return ItemStack.EMPTY;
             }
             if(!clickedItem.isEmpty()){

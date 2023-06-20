@@ -3,16 +3,14 @@ package de.monver.bfacilities.gui;
 import com.pixelmonmod.pixelmon.api.pokemon.PokemonFactory;
 import com.pixelmonmod.pixelmon.api.registries.PixelmonSpecies;
 import com.pixelmonmod.pixelmon.api.util.helpers.SpriteItemHelper;
+import de.monver.bfacilities.utils.GenerationHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.text.StringTextComponent;
 
-import java.util.Random;
-
-public class Utils {
-    static Random random = new Random();
+public class RerollHelper {
     static ItemStack rerollButton = new ItemStack((Items.RED_STAINED_GLASS_PANE)).setDisplayName(new StringTextComponent("Reroll"));
 
     public static ItemStack reroller(int row, int[] rerollsContainer, PlayerEntity player, Inventory inventory) {
@@ -24,7 +22,7 @@ public class Utils {
         rerollsContainer[row]--;
 
         for (int i = 0; i < 6; ++i) {
-            int rand = random.nextInt(904) + 1;
+            int rand = GenerationHelper.getDexNumber();
             ItemStack photo = SpriteItemHelper.getPhoto(PokemonFactory.create(PixelmonSpecies.fromNationalDex(rand)));
             inventory.setInventorySlotContents((row + 1) * 9 + i, photo.setDisplayName(PixelmonSpecies.fromNationalDex(rand).getTranslatedName()));
         }
