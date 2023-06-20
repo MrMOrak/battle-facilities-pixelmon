@@ -9,7 +9,7 @@ version = '1.0-SNAPSHOT'
 
 java {
     archivesBaseName = 'bFacilities'
-    toolchain.languageVersion = JavaLanguageVersion.of(8)
+    toolchain.languageVersion = JavaLanguageVersion.of(11)
 }
 
 minecraft {
@@ -130,6 +130,8 @@ dependencies {
 
     // Examples using mod jars from ./libs
     // implementation fg.deobf("blank:coolmod-${mc_version}:${coolmod_version}")
+    //implementation fg.deobf("envygts:EnvyGTS-Forge-4.1.8-1.16.5:4.1.8")
+    compileOnly files('libs/EnvyGTS-Forge-4.1.8-1.16.5.jar')
 
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
