@@ -1,7 +1,7 @@
 package de.monver.bfacilities;
 
 import com.pixelmonmod.pixelmon.Pixelmon;
-import de.monver.bfacilities.commands.InitiateBattleFacility;
+import de.monver.bfacilities.commands.bfacility;
 import de.monver.bfacilities.config.BFacilitiesConfig;
 import de.monver.bfacilities.events.DexAdditionEvent;
 import de.monver.bfacilities.tempParty.TempParty;
@@ -13,11 +13,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.network.FMLNetworkConstants;
 import org.apache.commons.lang3.tuple.Pair;
-import de.monver.bfacilities.commands.CancelBattlefacilities;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("bfacilities")
@@ -38,8 +36,7 @@ public class BattleFacilities {
 
     @SubscribeEvent
     public void registerCommands(RegisterCommandsEvent event) {
-        InitiateBattleFacility.register(event.getDispatcher());
-        CancelBattlefacilities.register(event.getDispatcher());
+        bfacility.register(event.getDispatcher());
     }
 
     @SubscribeEvent
