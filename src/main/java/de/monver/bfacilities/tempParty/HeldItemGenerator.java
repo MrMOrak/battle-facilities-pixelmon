@@ -71,48 +71,49 @@ public class HeldItemGenerator {
 
     public static ItemStack generateHeldItem(Pokemon pokemon) {
 
+        float chance = BFacilitiesConfig.HELD_ITEMS_BIAS_CHANCE.get().floatValue();
         Species species = pokemon.getSpecies();
         if (BFacilitiesConfig.HELD_ITEMS_BIAS.get()) {
             if (PixelmonSpecies.DIALGA.getValueUnsafe().equals(species)) {
-                if (getRandomChance(0.33F)) {
+                if (getRandomChance(chance)) {
                     return new ItemStack(PixelmonItems.adamant_orb);
                 }
             } else if (PixelmonSpecies.GENESECT.getValueUnsafe().equals(species)) {
-                if (getRandomChance(0.33F)) {
+                if (getRandomChance(chance)) {
                     if (pokemon.getMoveset().hasAttack(AttackRegistry.TECHNO_BLAST)) {
                         return getRandomElementFromArray(heldItemsDrives);
                     }
                 }
             } else if (PixelmonSpecies.SILVALLY.getValueUnsafe().equals(species)) {
-                if (getRandomChance(0.33F)) {
+                if (getRandomChance(chance)) {
                     return getRandomElementFromArray(heldItemsDrives);
                 }
             } else if (PixelmonSpecies.GIRATINA.getValueUnsafe().equals(species)) {
-                if (getRandomChance(0.33F)) {
+                if (getRandomChance(chance)) {
                     return new ItemStack(PixelmonItems.griseous_orb);
                 }
             } else if (PixelmonSpecies.FARFETCHD.getValueUnsafe().equals(species) || PixelmonSpecies.SIRFETCHD.getValueUnsafe().equals(species)) {
-                if (getRandomChance(0.33F)) {
+                if (getRandomChance(chance)) {
                     return new ItemStack(PixelmonItems.leek);
                 }
             } else if (PixelmonSpecies.PIKACHU.getValueUnsafe().equals(species)) {
-                if (getRandomChance(0.33F)) {
+                if (getRandomChance(chance)) {
                     return new ItemStack(PixelmonItems.light_ball);
                 }
             } else if (PixelmonSpecies.PALKIA.getValueUnsafe().equals(species)) {
-                if (getRandomChance(0.33F)) {
+                if (getRandomChance(chance)) {
                     return new ItemStack(PixelmonItems.lustrous_orb);
                 }
             } else if (PixelmonSpecies.ZAMAZENTA.getValueUnsafe().equals(species)) {
-                if (getRandomChance(0.5F)) {
+                if (getRandomChance(chance)) {
                     return new ItemStack(PixelmonItems.rusted_shield);
                 }
             } else if (PixelmonSpecies.ZACIAN.getValueUnsafe().equals(species)) {
-                if (getRandomChance(0.5F)) {
+                if (getRandomChance(chance)) {
                     return new ItemStack(PixelmonItems.rusted_sword);
                 }
             } else if (PixelmonSpecies.CUBONE.getValueUnsafe().equals(species) || PixelmonSpecies.MAROWAK.getValueUnsafe().equals(species)) {
-                if (getRandomChance(0.33F)) {
+                if (getRandomChance(chance)) {
                     return new ItemStack(PixelmonItems.thick_club);
                 }
             }

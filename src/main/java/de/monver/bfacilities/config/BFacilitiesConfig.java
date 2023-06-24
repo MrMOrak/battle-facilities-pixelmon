@@ -16,6 +16,7 @@ public final class BFacilitiesConfig {
     public static final ForgeConfigSpec.IntValue REROLLS;
     public static final ForgeConfigSpec.BooleanValue HELD_ITEMS;
     public static final ForgeConfigSpec.BooleanValue HELD_ITEMS_BIAS;
+    public static final ForgeConfigSpec.DoubleValue HELD_ITEMS_BIAS_CHANCE;
 
 
     static {
@@ -37,7 +38,8 @@ public final class BFacilitiesConfig {
 
         BUILDER.comment("Allow random held items for generated pokemon");
         HELD_ITEMS = BUILDER.define("random held items", true);
-        HELD_ITEMS_BIAS = BUILDER.define("biased item choice", true);
+        HELD_ITEMS_BIAS = BUILDER.define("biased item choice for special pokemon", true);
+        HELD_ITEMS_BIAS_CHANCE = BUILDER.defineInRange("chance for biased held items", 0.33F, 0F, 1F);
 
         BUILDER.pop();
         Config.setInsertionOrderPreserved(true);

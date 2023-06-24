@@ -73,6 +73,7 @@ public class BFacilityCommand {
             ChatHandler.sendChat(player, TextFormatting.GREEN + "Regional Forms: " + BFacilitiesConfig.REGIONAL.get());
             ChatHandler.sendChat(player, TextFormatting.GREEN + "Random Held Items: " + BFacilitiesConfig.HELD_ITEMS.get());
             ChatHandler.sendChat(player, TextFormatting.GREEN + "Held Item Bias: " + BFacilitiesConfig.HELD_ITEMS_BIAS.get());
+            ChatHandler.sendChat(player, TextFormatting.GREEN + "Held Item Bias Chance: " + BFacilitiesConfig.HELD_ITEMS_BIAS_CHANCE.get().floatValue());
             return 1;
         } else {
             Message errorMessageComponent = new StringTextComponent("Not a player!");
