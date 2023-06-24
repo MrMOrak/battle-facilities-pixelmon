@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import org.jetbrains.annotations.NotNull;
-import java.util.Random;
 
 import static com.pixelmonmod.pixelmon.api.util.helpers.RandomHelper.getRandomChance;
 

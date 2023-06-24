@@ -4,6 +4,7 @@ import com.pixelmonmod.pixelmon.Pixelmon;
 import de.monver.bfacilities.commands.BFacilityCommand;
 import de.monver.bfacilities.config.BFacilitiesConfig;
 import de.monver.bfacilities.events.DexAdditionEvent;
+import de.monver.bfacilities.events.HeldItemGlueEvent;
 import de.monver.bfacilities.tempParty.TempParty;
 import de.monver.bfacilities.utils.ModIntegration;
 import net.minecraftforge.common.MinecraftForge;
@@ -42,6 +43,7 @@ public class BattleFacilities {
     @SubscribeEvent
     public void serverStarting(FMLServerStartingEvent event){
         Pixelmon.EVENT_BUS.register(new DexAdditionEvent());
+        Pixelmon.EVENT_BUS.register(new HeldItemGlueEvent());
         ModIntegration.initialize();
     }
 
