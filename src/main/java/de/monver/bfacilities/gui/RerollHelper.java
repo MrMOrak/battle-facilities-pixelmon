@@ -3,6 +3,7 @@ package de.monver.bfacilities.gui;
 import com.pixelmonmod.pixelmon.api.pokemon.PokemonFactory;
 import com.pixelmonmod.pixelmon.api.registries.PixelmonSpecies;
 import com.pixelmonmod.pixelmon.api.util.helpers.SpriteItemHelper;
+import de.monver.bfacilities.config.BFacilitiesConfig;
 import de.monver.bfacilities.utils.GenerationHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -21,7 +22,7 @@ public class RerollHelper {
 
         rerollsContainer[row]--;
 
-        for (int i = 0; i < 6; ++i) {
+        for (int i = 0; i < BFacilitiesConfig.TEAM_SIZE.get(); ++i) {
             int rand = GenerationHelper.getDexNumber();
             ItemStack photo = SpriteItemHelper.getPhoto(PokemonFactory.create(PixelmonSpecies.fromNationalDex(rand)));
             inventory.setInventorySlotContents((row + 1) * 9 + i, photo.setDisplayName(PixelmonSpecies.fromNationalDex(rand).getTranslatedName()));

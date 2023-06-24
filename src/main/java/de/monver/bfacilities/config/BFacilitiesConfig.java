@@ -10,6 +10,7 @@ public final class BFacilitiesConfig {
     public static final ForgeConfigSpec SPEC;
 
     public static final ForgeConfigSpec.IntValue LEVEL;
+    public static final ForgeConfigSpec.IntValue TEAM_SIZE;
     public static final ForgeConfigSpec.EnumValue<Generations> GENERATION;
     public static final ForgeConfigSpec.BooleanValue MULTIPLE_GEN;
     public static final ForgeConfigSpec.BooleanValue REGIONAL;
@@ -20,6 +21,9 @@ public final class BFacilitiesConfig {
         BUILDER.push("Team Generation Config");
         BUILDER.comment("Sets the level for the battle facilities teams");
         LEVEL = BUILDER.defineInRange("level", 50, 1, 100);
+
+        BUILDER.comment("Sets the maximum team size");
+        TEAM_SIZE = BUILDER.defineInRange("team size", 6, 1, 6);
 
         BUILDER.comment("Sets the generations from which the pokemon are pulled");
         GENERATION = BUILDER.defineEnum("generation", Generations.ALL);
