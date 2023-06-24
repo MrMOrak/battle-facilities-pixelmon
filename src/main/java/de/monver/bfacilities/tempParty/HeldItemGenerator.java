@@ -6,9 +6,6 @@ import com.pixelmonmod.pixelmon.api.pokemon.species.Species;
 import com.pixelmonmod.pixelmon.api.registries.PixelmonItems;
 import com.pixelmonmod.pixelmon.api.registries.PixelmonSpecies;
 import com.pixelmonmod.pixelmon.api.util.helpers.RandomHelper;
-import com.pixelmonmod.pixelmon.battles.attacks.Attack;
-import com.pixelmonmod.pixelmon.battles.attacks.ImmutableAttack;
-import com.pixelmonmod.pixelmon.items.MemoryItem;
 import de.monver.bfacilities.config.BFacilitiesConfig;
 import net.minecraft.item.ItemStack;
 
