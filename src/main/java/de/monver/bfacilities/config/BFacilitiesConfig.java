@@ -14,6 +14,7 @@ public final class BFacilitiesConfig {
     public static final ForgeConfigSpec.BooleanValue MULTIPLE_GEN;
     public static final ForgeConfigSpec.BooleanValue REGIONAL;
     public static final ForgeConfigSpec.IntValue REROLLS;
+    public static final ForgeConfigSpec.BooleanValue HELD_ITEMS;
 
 
     static {
@@ -32,6 +33,9 @@ public final class BFacilitiesConfig {
 
         BUILDER.comment("Allow regional forms");
         REGIONAL = BUILDER.define("enable regional forms", true);
+
+        BUILDER.comment("Allow random held items for generated pokemon");
+        HELD_ITEMS = BUILDER.define("random held items", true);
 
         BUILDER.pop();
         Config.setInsertionOrderPreserved(true);
