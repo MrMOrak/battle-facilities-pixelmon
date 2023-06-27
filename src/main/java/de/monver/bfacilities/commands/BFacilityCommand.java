@@ -64,6 +64,7 @@ public class BFacilityCommand {
             ServerPlayerEntity player = (ServerPlayerEntity) entity;
             ChatHandler.sendChat(player, TextFormatting.GREEN + "Current Config Settings:");
             ChatHandler.sendChat(player, TextFormatting.GREEN + "Level: " + BFacilitiesConfig.LEVEL.get());
+            ChatHandler.sendChat(player, TextFormatting.GREEN + "Team Size: " + BFacilitiesConfig.TEAM_SIZE.get());
             if (BFacilitiesConfig.MULTIPLE_GEN.get()){
                 ChatHandler.sendChat(player, TextFormatting.GREEN + "Generation: up until Gen " + BFacilitiesConfig.GENERATION.get());
             } else {

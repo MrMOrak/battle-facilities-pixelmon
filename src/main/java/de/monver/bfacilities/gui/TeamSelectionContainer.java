@@ -24,7 +24,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-
 public class TeamSelectionContainer extends Container implements INamedContainerProvider {
 
 
@@ -48,12 +47,13 @@ public class TeamSelectionContainer extends Container implements INamedContainer
         int COLUMNS = 9;
         this.inventory = new Inventory(ROWS * COLUMNS);
 
-        for(int i = 0; i < REROLLS.length; i++){
+        for (int i = 0; i < REROLLS.length; i++) {
             REROLLS[i] = BFacilitiesConfig.REROLLS.get();
         }
         rerollButton.setCount(BFacilitiesConfig.REROLLS.get());
 
         int slotIndex = 0;
+        int teamSize = BFacilitiesConfig.TEAM_SIZE.get();
 
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLUMNS; j++) {
@@ -65,13 +65,13 @@ public class TeamSelectionContainer extends Container implements INamedContainer
                         inventory.setInventorySlotContents(slotIndex, paneCyan);
                     }
                 } else {
-                    if (j < 6) {
+                    if (j < teamSize) {
                         this.addSlot(new TeamSlot(inventory, slotIndex, 8 + j * 18, 18 + i * 18));
                         int rand = GenerationHelper.getDexNumber();
                         ItemStack photo = SpriteItemHelper.getPhoto(PokemonFactory.create(PixelmonSpecies.fromNationalDex(rand)));
                         inventory.setInventorySlotContents(slotIndex, photo.setDisplayName(PixelmonSpecies.fromNationalDex(rand).getTranslatedName()));
                     }
-                    if (j == 6) {
+                    if (j >= teamSize && j < 7) {
                         this.addSlot(new PlaceHolderSlot(inventory, slotIndex, 8 + j * 18, 18 + i * 18));
                         inventory.setInventorySlotContents(slotIndex, paneGray);
                     }
@@ -144,10 +144,10 @@ public class TeamSelectionContainer extends Container implements INamedContainer
 
             }
             if (slot instanceof RerollSlot) {
-                inventory.setInventorySlotContents(slotId, RerollHelper.reroller(slotId/9 - 1, REROLLS, player, inventory));
+                inventory.setInventorySlotContents(slotId, RerollHelper.reroller(slotId / 9 - 1, REROLLS, player, inventory));
                 return ItemStack.EMPTY;
             }
-            if(!clickedItem.isEmpty()){
+            if (!clickedItem.isEmpty()) {
                 slot.putStack(clickedItem.copy());
                 slot.onSlotChanged();
             }
