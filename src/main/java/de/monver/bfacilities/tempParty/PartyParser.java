@@ -38,6 +38,9 @@ public class PartyParser {
                 } else {
                     photMon.setAbility(photMon.getForm().getAbilities().getRandomAbility());
                 }
+                if (BFacilitiesConfig.HELD_ITEMS.get()){
+                    photMon.setHeldItem(HeldItemGenerator.generateHeldItem(photMon));
+                }
                 teamArray[i] = photMon;
             }
         }
